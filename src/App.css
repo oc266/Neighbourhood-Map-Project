@@ -6,7 +6,7 @@
 }
 
 .app-header {
-  background-color: grey;
+  background-color: rgb(60, 60, 60);
   height: 50px;
   width: 100%;
   padding: 5px;
@@ -14,14 +14,7 @@
 }
 
 .places-hamburger {
-  position: absolute;
-  left: 0;
-  padding: 1em;
-}
-
-.places-hamburger svg {
-  width: 32px;
-  fill: #E0E0E0;
+  display: none;
 }
 
 .app-title {
@@ -30,12 +23,45 @@
 
 .places-list {
   width: 20%;
-  background-color: rgb(40, 40, 40);
+  background-color: rgb(60, 60, 60);
   height: calc(100% - 55px);
 }
 
 .map-container {
   width: 80%;
-  background-color: blue;
-  height: calc(100% - 55px);
+  height: 100vh;
+}
+
+@media screen and (max-width: 625px) {
+  .places-hamburger {
+    display: block;
+    position: absolute;
+    height: 100%;
+    right: 0;
+    padding: 1em;
+  }
+
+  .places-hamburger svg {
+    width: 32px;
+    fill: #E0E0E0;
+  }
+
+  .map-container {
+    width: 100%;
+  }
+
+  .places-list {
+    z-index: 10;
+    position: absolute;
+    width: 300px;
+    left: 0;
+    -webkit-transform: translate(-300px, 0);
+    transform: translate(-300px, 0);
+    transition: transform 0.3s ease;
+  }
+
+  .places-list.open {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
 }

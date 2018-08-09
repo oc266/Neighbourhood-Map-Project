@@ -4,6 +4,14 @@ import MapContainer from './MapContainer.js';
 import './App.css';
 
 class App extends Component {
+
+  componentDidMount() {
+    document.querySelector('.places-hamburger').addEventListener('click', function (e) {
+      document.querySelector('.places-list').classList.toggle('open');
+      e.stopPropagation();
+    })
+  }
+
   render() {
     return (
       <div className="app">
