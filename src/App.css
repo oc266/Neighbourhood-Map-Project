@@ -1,0 +1,41 @@
+.app {
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.app-header {
+  background-color: grey;
+  height: 50px;
+  width: 100%;
+  padding: 5px;
+  color: white;
+}
+
+.places-hamburger {
+  position: absolute;
+  left: 0;
+  padding: 1em;
+}
+
+.places-hamburger svg {
+  width: 32px;
+  fill: #E0E0E0;
+}
+
+.app-title {
+  font-size: 1.5em;
+}
+
+.places-list {
+  width: 20%;
+  background-color: rgb(40, 40, 40);
+  height: calc(100% - 55px);
+}
+
+.map-container {
+  width: 80%;
+  background-color: blue;
+  height: calc(100% - 55px);
+}
