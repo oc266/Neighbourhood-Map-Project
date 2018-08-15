@@ -7,9 +7,9 @@ class MapContainer extends Component {
     displayingInfoWindow: false
   }
 
-  onMarkerClick(target) {
+  onMarkerClick(props, marker, e) {
     this.setState({
-      activeMarker: target,
+      activeMarker: marker,
       displayingInfoWindow: true
     })
   }
@@ -30,7 +30,7 @@ class MapContainer extends Component {
             <Marker key={i}
               title={location.name}
               position={location.location}
-              onClick={(marker) => this.onMarkerClick(marker)}
+              onClick={(props, marker) => this.onMarkerClick(props, marker)}
             />
           ))}
           <InfoWindow
