@@ -1,20 +1,45 @@
 import React, { Component } from 'react';
-import { GoogleApiWrapper, InfoWindow, Marker, Map } from 'google-maps-react';
-import './App.css';
+import { Map, Marker, InfoWindow } from 'google-maps-react';
 
 class MapContainer extends Component {
+  state = {
+    activeMarker: {},
+    displayingInfoWindow: false
+  }
+
+  onMarkerClick(target) {
+    this.setState({
+      activeMarker: target,
+      displayingInfoWindow: true
+    })
+  }
+
 
   render() {
     return (
       <div className='map' role='application' ref='map'>
-        <Map
+        <Map role='application' ref='map'
           google={this.props.google}
-          zoom={13}
+          zoom={12}
           initialCenter={{
-            lat: 55.6805,
-            lng: 12.5860
+            lat: 47.4779,
+            lng: 19.0902
           }}
-        />
+          >
+          {this.props.locations.map((location, i) => (
+            <Marker key={i}
+              title={location.name}
+              position={location.location}
+              onClick={(marker) => this.onMarkerClick(marker)}
+            />
+          ))}
+          <InfoWindow
+            marker={this.state.activeMarker}
+            visible={this.state.displayingInfoWindow}
+          >
+            <p>{this.state.activeMarker.title}</p>
+          </InfoWindow>
+        </Map>
       </div>
     )
   }

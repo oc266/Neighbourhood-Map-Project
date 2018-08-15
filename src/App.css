@@ -28,9 +28,14 @@
   height: calc(100% - 55px);
 }
 
-.map {
+.map-container {
   width: 80%;
   height: 100vh;
+}
+
+.map {
+  width: 100%;
+  height: auto;
 }
 
 @media screen and (max-width: 625px) {
@@ -47,7 +52,7 @@
     fill: #E0E0E0;
   }
 
-  .map {
+  .map-container {
     width: 100%;
   }
 
