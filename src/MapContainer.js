@@ -4,12 +4,14 @@ import { Map, Marker, InfoWindow } from 'google-maps-react';
 class MapContainer extends Component {
   state = {
     activeMarker: {},
+    selectedLocation: {},
     displayingInfoWindow: false
   }
 
   onMarkerClick(props, marker, e) {
     this.setState({
       activeMarker: marker,
+      selectedLocation: props,
       displayingInfoWindow: true
     })
   }
@@ -31,6 +33,10 @@ class MapContainer extends Component {
               title={location.name}
               position={location.location}
               onClick={(props, marker) => this.onMarkerClick(props, marker)}
+              animation={
+                (this.state.selectedLocation.title === location.name)
+                && this.props.google.maps.Animation.BOUNCE
+              }
             />
           ))}
           <InfoWindow

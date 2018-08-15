@@ -11,17 +11,26 @@ class App extends Component {
       {name: 'Rengeteg RomKafé ', type: 'Hot chocolate café', location: {lat: 47.483592, lng: 19.072656}},
       {name: 'Kozmosz Vegán Étterem', type: 'Vegan restaurant', location: {lat: 47.449166, lng: 19.130861}},
       {name: 'ExitPoint Games', type: 'Exit room', location: {lat: 47.4989, lng: 19.0573}}
-    ]
+    ],
+    displayedLocations: [],
+    query: ''
   }
 
   componentDidMount() {
     document.querySelector('.places-hamburger').addEventListener('click', function (e) {
-      document.querySelector('.places-list').classList.toggle('open');
+      document.querySelector('.places-search-list').classList.toggle('open');
       e.stopPropagation();
     })
   }
 
+  UpdateQuery = (query) => {
+    this.setState({ query })
+    console.log(query)
+  }
+
   render() {
+    const { google } = this.props
+    const { query, locations } = this.state
     return (
       <div className="app">
         <header className="app-header">
@@ -32,13 +41,29 @@ class App extends Component {
           </a>
           <h1 className="app-title">Neighborhood Map</h1>
         </header>
-        <section className="places-list">
-          <p>Hello</p>
+        <section className="places-search-list">
+          <div className='places-search-bar'>
+            <input
+              type="text"
+              placeholder="Search location"
+              value={query}
+              onChange={(event) => this.UpdateQuery(event.target.value)}
+            />
+          </div>
+          <ul className="places-list">
+            {locations.map((location, i) => (
+              <li key={i} className="list-item">
+                <div className="place-list-item">
+                  <p>{location.name}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </section>
         <div className="map-container">
           <MapContainer
-            google={this.props.google}
-            locations={this.state.locations}
+            google={google}
+            locations={locations}
           />
         </div>
       </div>
