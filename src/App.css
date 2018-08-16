@@ -29,18 +29,15 @@
 }
 
 .places-list {
+  width: 100%;
   list-style: none;
   text-align: left;
   color: white;
 }
 
-.place {
-  width: 100%;
-
-}
-
 .place-list-item {
   background-color: rgb(60, 60, 60);
+  text-align: left;
   color: white;
   border: none;
   font-size: 0.8em;
@@ -48,6 +45,7 @@
 }
 
 .map-container {
+  position: relative;
   width: 75%;
   height: calc(100vh - 55px);
 }
@@ -55,6 +53,18 @@
 .map {
   width: 75%;
   height: auto;
+}
+
+@media screen and (max-width: 780px) {
+  .place-list-item {
+    font-size: 0.7em;
+  }
+}
+
+@media screen and (max-width: 710px) {
+  .place-list-item {
+    font-size: 0.6em;
+  }
 }
 
 @media screen and (max-width: 625px) {
@@ -89,5 +99,13 @@
   .places-search-list.open {
     -webkit-transform: translate(0, 0);
     transform: translate(0, 0);
+  }
+
+  .places-search-bar {
+    padding-top: 55px;
+  }
+
+  .place-list-item {
+    font-size: 0.8em;
   }
 }
