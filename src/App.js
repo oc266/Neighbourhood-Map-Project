@@ -14,11 +14,12 @@ class App extends Component {
       {name: 'ExitPoint Games', type: 'Exit room', location: {lat: 47.4989, lng: 19.0573}}
     ],
     query: '',
-    markers: [],
     activeMarker: {},
     selectedLocation: {},
     displayingInfoWindow: false
   }
+
+  markers =  []
 
   componentDidMount() {
     document.querySelector('.places-hamburger').addEventListener('click', function (e) {
@@ -27,9 +28,9 @@ class App extends Component {
     })
   }
 
-  onMarkerMount = (marker) => {
-    let markers = this.state.markers.push(marker)
-    this.setState({ markers })
+  onMarkerMounted = (marker) => {
+    let markers = this.markers.push(marker)
+    console.log(this.markers)
   }
 
   onMarkerClick = (props, marker, e) => {
@@ -38,15 +39,16 @@ class App extends Component {
       selectedLocation: props,
       displayingInfoWindow: true
     })
-    console.log(this.state.selectedLocation)
   }
 
   updateQuery = (query) => {
     this.setState({ query })
   }
 
-  selectLocation = (locationButton) => {
-    let matchedLocation = this.state.locations.filter((location) => location.name == locationButton.textContent)[0]
+  selectLocation = (location) => {
+    let matchedMarker = this.markers.filter((marker) =>
+      marker.props.title == location.textContent)[0]
+    matchedMarker.props.google.maps.event.trigger(matchedMarker.marker, 'click')
 
     if (window.screen.width < 625) {
        document.querySelector('.places-search-list').classList.toggle('open')
@@ -55,7 +57,7 @@ class App extends Component {
 
   render() {
     const { google } = this.props
-    const { query, locations, markers, activeMarker, selectedLocation, displayingInfoWindow } = this.state
+    const { query, locations, activeMarker, selectedLocation, displayingInfoWindow } = this.state
 
     let filteredLocations
     if (this.state.query) {
@@ -102,6 +104,7 @@ class App extends Component {
           <MapContainer
             google={google}
             locations={filteredLocations}
+            onMarkerMounted={this.onMarkerMounted}
             onMarkerClick={this.onMarkerClick}
             activeMarker={activeMarker}
             selectedLocation={selectedLocation}
