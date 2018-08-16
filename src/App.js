@@ -13,7 +13,11 @@ class App extends Component {
       {name: 'Kozmosz Vegán Étterem', type: 'Vegan restaurant', location: {lat: 47.449166, lng: 19.130861}},
       {name: 'ExitPoint Games', type: 'Exit room', location: {lat: 47.4989, lng: 19.0573}}
     ],
-    query: ''
+    query: '',
+    markers: [],
+    activeMarker: {},
+    selectedLocation: {},
+    displayingInfoWindow: false
   }
 
   componentDidMount() {
@@ -21,6 +25,20 @@ class App extends Component {
       document.querySelector('.places-search-list').classList.toggle('open');
       e.stopPropagation();
     })
+  }
+
+  onMarkerMount = (marker) => {
+    let markers = this.state.markers.push(marker)
+    this.setState({ markers })
+  }
+
+  onMarkerClick = (props, marker, e) => {
+    this.setState({
+      activeMarker: marker,
+      selectedLocation: props,
+      displayingInfoWindow: true
+    })
+    console.log(this.state.selectedLocation)
   }
 
   updateQuery = (query) => {
@@ -37,7 +55,7 @@ class App extends Component {
 
   render() {
     const { google } = this.props
-    const { query, locations } = this.state
+    const { query, locations, markers, activeMarker, selectedLocation, displayingInfoWindow } = this.state
 
     let filteredLocations
     if (this.state.query) {
@@ -71,7 +89,6 @@ class App extends Component {
             {filteredLocations.map((location, i) => (
               <li key={i} className="list-item">
                 <button
-                  role="place in list"
                   className="place-list-item"
                   onClick={(event) => this.selectLocation(event.target)}
                   >
@@ -85,6 +102,10 @@ class App extends Component {
           <MapContainer
             google={google}
             locations={filteredLocations}
+            onMarkerClick={this.onMarkerClick}
+            activeMarker={activeMarker}
+            selectedLocation={selectedLocation}
+            displayingInfoWindow={displayingInfoWindow}
           />
         </div>
       </div>
