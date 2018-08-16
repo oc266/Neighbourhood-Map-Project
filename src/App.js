@@ -39,13 +39,14 @@ class App extends Component {
   }
 
   onMarkerClick = (props, marker, e) => {
+    marker.setAnimation(this.props.google.maps.Animation.BOUNCE);
     this.setState({
       activeMarker: marker,
       selectedLocation: props,
       displayingInfoWindow: true,
       animatedLocation: props.title
     })
-    console.log(this.state.animatedLocation)
+    marker.setAnimation(null)
   }
 
   updateQuery = (query) => {
