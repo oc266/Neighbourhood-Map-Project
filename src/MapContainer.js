@@ -4,7 +4,7 @@ import { Map, Marker, InfoWindow } from 'google-maps-react';
 class MapContainer extends Component {
 
   render() {
-    const { google, markers, locations, onMarkerMounted, onMarkerClick, selectedLocation, activeMarker, displayingInfoWindow } = this.props
+    const { google, locations, onMarkerMounted, onMarkerClick, selectedLocation, activeMarker, displayingInfoWindow, animatedLocation } = this.props
     return (
       <div className='map' role='application' ref='map'>
         <Map role='application' ref='map'
@@ -23,8 +23,7 @@ class MapContainer extends Component {
               position={location.location}
               onClick={(props, marker) => onMarkerClick(props, marker)}
               animation={
-                (selectedLocation.title === location.name)
-                && google.maps.Animation.BOUNCE
+                (animatedLocation === location.name) && google.maps.Animation.BOUNCE
               }
             />
           ))}

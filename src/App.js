@@ -16,10 +16,11 @@ class App extends Component {
     query: '',
     activeMarker: {},
     selectedLocation: {},
-    displayingInfoWindow: false
+    displayingInfoWindow: false,
+    animatedLocation: ''
   }
 
-  markers =  []
+  markers = []
 
   componentDidMount() {
     document.querySelector('.places-hamburger').addEventListener('click', function (e) {
@@ -30,19 +31,21 @@ class App extends Component {
 
   onMarkerMounted = (marker) => {
     if (marker != null) {
-      if (this.markers.length != this.state.locations.length) {
-        this.markers.push(marker)
-      }
+      this.markers.push(marker)
+      // if (this.markers.length !== this.state.locations.length) {
+      //   this.markers.push(marker)
+      // }
     }
-    console.log(this.markers)
   }
 
   onMarkerClick = (props, marker, e) => {
     this.setState({
       activeMarker: marker,
       selectedLocation: props,
-      displayingInfoWindow: true
+      displayingInfoWindow: true,
+      animatedLocation: props.title
     })
+    console.log(this.state.animatedLocation)
   }
 
   updateQuery = (query) => {
@@ -50,7 +53,7 @@ class App extends Component {
   }
 
   selectLocation = (location) => {
-    let matchedMarker = this.markers.filter((marker) => marker.props.title == location.textContent)[0]
+    let matchedMarker = this.markers.filter((marker) => marker.props.title === location.textContent)[0]
     matchedMarker.props.google.maps.event.trigger(matchedMarker.marker, 'click')
 
     if (window.screen.width < 625) {
@@ -60,7 +63,7 @@ class App extends Component {
 
   render() {
     const { google } = this.props
-    const { query, locations, activeMarker, selectedLocation, displayingInfoWindow } = this.state
+    const { query, locations, activeMarker, selectedLocation, displayingInfoWindow, animatedLocation } = this.state
 
     let filteredLocations
     if (this.state.query) {
@@ -112,6 +115,7 @@ class App extends Component {
             activeMarker={activeMarker}
             selectedLocation={selectedLocation}
             displayingInfoWindow={displayingInfoWindow}
+            animatedLocation={animatedLocation}
           />
         </div>
       </div>
