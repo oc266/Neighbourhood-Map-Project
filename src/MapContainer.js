@@ -14,6 +14,8 @@ class MapContainer extends Component {
       selectedLocation: props,
       displayingInfoWindow: true
     })
+    console.log(props)
+    console.log(marker)
   }
 
 

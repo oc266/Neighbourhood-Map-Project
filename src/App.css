@@ -7,7 +7,7 @@
 }
 
 .app-header {
-  background-color: rgb(70, 70, 70);
+  background-color: rgb(75, 75, 75);
   height: 50px;
   width: 100%;
   padding: 5px;
@@ -40,6 +40,9 @@
 }
 
 .place-list-item {
+  background-color: rgb(60, 60, 60);
+  color: white;
+  border: none;
   font-size: 0.8em;
   padding-bottom: 4%;
 }

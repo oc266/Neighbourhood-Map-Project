@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { GoogleApiWrapper } from 'google-maps-react';
 import MapContainer from './MapContainer.js';
+import escapeRegExp from 'escape-string-regexp';
 import './App.css';
 
 class App extends Component {
@@ -12,7 +13,6 @@ class App extends Component {
       {name: 'Kozmosz Vegán Étterem', type: 'Vegan restaurant', location: {lat: 47.449166, lng: 19.130861}},
       {name: 'ExitPoint Games', type: 'Exit room', location: {lat: 47.4989, lng: 19.0573}}
     ],
-    displayedLocations: [],
     query: ''
   }
 
@@ -23,14 +23,30 @@ class App extends Component {
     })
   }
 
-  UpdateQuery = (query) => {
+  updateQuery = (query) => {
     this.setState({ query })
-    console.log(query)
+  }
+
+  selectLocation = (locationButton) => {
+    let matchedLocation = this.state.locations.filter((location) => location.name == locationButton.textContent)[0]
+
+    if (window.screen.width < 625) {
+       document.querySelector('.places-search-list').classList.toggle('open')
+     }
   }
 
   render() {
     const { google } = this.props
     const { query, locations } = this.state
+
+    let filteredLocations
+    if (this.state.query) {
+      const match = new RegExp(escapeRegExp(this.state.query), 'i')
+      filteredLocations = locations.filter((location) => match.test(location.name))
+    } else {
+      filteredLocations = locations
+    }
+
     return (
       <div className="app">
         <header className="app-header">
@@ -44,18 +60,23 @@ class App extends Component {
         <section className="places-search-list">
           <div className='places-search-bar'>
             <input
+              role="search"
               type="text"
               placeholder="Search location"
               value={query}
-              onChange={(event) => this.UpdateQuery(event.target.value)}
+              onChange={(event) => this.updateQuery(event.target.value)}
             />
           </div>
           <ul className="places-list">
-            {locations.map((location, i) => (
+            {filteredLocations.map((location, i) => (
               <li key={i} className="list-item">
-                <div className="place-list-item">
-                  <p>{location.name}</p>
-                </div>
+                <button
+                  role="place in list"
+                  className="place-list-item"
+                  onClick={(event) => this.selectLocation(event.target)}
+                  >
+                  {location.name}
+                </button>
               </li>
             ))}
           </ul>
@@ -63,7 +84,7 @@ class App extends Component {
         <div className="map-container">
           <MapContainer
             google={google}
-            locations={locations}
+            locations={filteredLocations}
           />
         </div>
       </div>
