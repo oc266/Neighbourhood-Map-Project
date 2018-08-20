@@ -4,15 +4,15 @@ import { Map, Marker, InfoWindow } from 'google-maps-react';
 class MapContainer extends Component {
 
   render() {
-    const { google, locations, onMarkerMounted, onMarkerClick, selectedLocation, activeMarker, displayingInfoWindow, animatedLocation } = this.props
+    const { google, locations, onMarkerMounted, onMarkerClick, wikiData, selectedLocation, activeMarker, displayingInfoWindow } = this.props
     return (
       <div className='map' role='application' ref='map'>
         <Map role='application' ref='map'
           google = {google}
-          zoom={12}
+          zoom={10.5}
           initialCenter={{
-            lat: 47.4779,
-            lng: 19.0902
+            lat: 51.5152,
+            lng: -0.1819
           }}
           >
           {locations.map((location, i) => (
@@ -22,16 +22,28 @@ class MapContainer extends Component {
               title={location.name}
               position={location.location}
               onClick={(props, marker) => onMarkerClick(props, marker)}
-              // animation={
-              //   (animatedLocation === location.name) && google.maps.Animation.BOUNCE
-              // }
             />
           ))}
           <InfoWindow
             marker={activeMarker}
             visible={displayingInfoWindow}
           >
-            <p>{activeMarker.title}</p>
+            <div className='info_window'>
+              <p>{activeMarker.title}</p>
+              {wikiData.map(data => data.name === selectedLocation.title &&
+                <div key={data.text}>
+                  <p>
+                    {data.text}
+                  </p>
+                  <a
+                    href={data.url}
+                    className='get_more_info'
+                  >
+                    {data.getMoreInfo}
+                  </a>
+                </div>
+              )}
+            </div>
           </InfoWindow>
         </Map>
       </div>

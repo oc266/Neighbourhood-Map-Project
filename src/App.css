@@ -55,6 +55,10 @@
   height: auto;
 }
 
+.info_window {
+  width: 200px;
+}
+
 @media screen and (max-width: 780px) {
   .place-list-item {
     font-size: 0.7em;

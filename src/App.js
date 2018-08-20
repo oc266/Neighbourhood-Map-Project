@@ -7,17 +7,17 @@ import './App.css';
 class App extends Component {
   state = {
     locations: [
-      {name: 'Csendes Arts N Crafts', type: 'Craft shopping', location: {lat: 47.492665, lng: 19.060121}},
-      {name: 'Fekete Kutya', type: 'Bar', location: {lat: 47.498818, lng: 19.062039}},
-      {name: 'Rengeteg RomKafé ', type: 'Hot chocolate café', location: {lat: 47.483592, lng: 19.072656}},
-      {name: 'Kozmosz Vegán Étterem', type: 'Vegan restaurant', location: {lat: 47.449166, lng: 19.130861}},
-      {name: 'ExitPoint Games', type: 'Exit room', location: {lat: 47.4989, lng: 19.0573}}
+      {name: 'Griffin Park', location: {lat: 51.4882, lng: -0.3025}},
+      {name: 'Craven Cottage', location: {lat: 51.4749, lng: -0.2218}},
+      {name: 'Emirates Stadium', location: {lat: 51.5549, lng: -0.1084}},
+      {name: 'Stamford Bridge', location: {lat: 51.4817, lng: -0.1910}},
+      {name: 'Loftus Road', location: {lat: 51.5093, lng: -0.2321}}
     ],
     query: '',
     activeMarker: {},
     selectedLocation: {},
-    displayingInfoWindow: false,
-    animatedLocation: ''
+    wikiData: [],
+    displayingInfoWindow: false
   }
 
   markers = []
@@ -27,14 +27,12 @@ class App extends Component {
       document.querySelector('.places-search-list').classList.toggle('open');
       e.stopPropagation();
     })
+    this.getWikiData()
   }
 
   onMarkerMounted = (marker) => {
     if (marker != null) {
       this.markers.push(marker)
-      // if (this.markers.length !== this.state.locations.length) {
-      //   this.markers.push(marker)
-      // }
     }
   }
 
@@ -43,14 +41,50 @@ class App extends Component {
     this.setState({
       activeMarker: marker,
       selectedLocation: props,
-      displayingInfoWindow: true,
-      animatedLocation: props.title
+      displayingInfoWindow: true
     })
     marker.setAnimation(null)
   }
 
   updateQuery = (query) => {
     this.setState({ query })
+  }
+
+  // Function to fetch data from wikipedia about all the locations. To be called
+  // on the page mounting so that all the data pulled from wikipedia can be
+  // stored in a state array, with entries for each location.
+  getWikiData = () => {
+    let wikiData = []
+    // Fetch a search result for each location in the locations array
+    this.state.locations.map((location) => {
+      return fetch(`https://en.wikipedia.org/w/api.php?&action=query&list=search&prop=extracts&titles&format=json&origin=*&srlimit=1&srsearch=${location.name}`)
+      // For each location's search result, we want to get the snippet and also
+      // create the URL for wikipedia's page on the location so that we can
+      // provide users with a snippet of information and also provide a link
+      // to the full wikipedia page
+      .then(response => response.json())
+      .then(data => {
+        let locationData = {
+          name: location.name,
+          text: data.query.search['0'].snippet.replace(/<(?:.|\n)*?>/gm, ''),
+          getMoreInfo: `Get more information about ${location.name}`,
+          url: encodeURI(`https://en.wikipedia.org/wiki/${data.query.search['0'].title}`)
+        }
+        wikiData.push(locationData)
+        this.setState({ wikiData })
+      })
+      // If the request for data failed, then we will need to load information
+      // which can be used to inform the user that the search failed
+      .catch(() => {
+        let locationData = {
+          name: location.name,
+          text: 'Could not fetch data from Wikipedia - please try again later',
+          getMoreInfo: 'No link could be found for further information'
+        }
+        wikiData.push(locationData)
+        this.setState({ wikiData })
+      })
+    })
   }
 
   selectLocation = (location) => {
@@ -64,7 +98,7 @@ class App extends Component {
 
   render() {
     const { google } = this.props
-    const { query, locations, activeMarker, selectedLocation, displayingInfoWindow, animatedLocation } = this.state
+    const { query, locations, activeMarker, selectedLocation, wikiData, displayingInfoWindow } = this.state
 
     let filteredLocations
     if (this.state.query) {
@@ -115,8 +149,8 @@ class App extends Component {
             onMarkerClick={this.onMarkerClick}
             activeMarker={activeMarker}
             selectedLocation={selectedLocation}
+            wikiData={wikiData}
             displayingInfoWindow={displayingInfoWindow}
-            animatedLocation={animatedLocation}
           />
         </div>
       </div>
