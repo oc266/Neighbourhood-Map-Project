@@ -10,11 +10,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 3. Start the development server with `npm start`
 
 ## What the app does
-The app shows a map (fetched from Google Maps API) of London with the location of football stadiums for teams currently in the Premier League or the Championship.
-When each of the markers showing these stadiums is clicked, it bounces once and an infowindow is brought up which provides a snippet of information, fetched from Wikipedia, about the stadium and a link to the main Wikipedia article about the stadium.
-As well as the markers on the map, there is also a list of the stadiums in a sidebar. The sidebar is always on show in large windows, but for small windows is hidden until the hamburger icon in the header is clicked.
-The sidebar contains a list of all the stadiums which the user can search over by typing into the search field at the top of the sidebar. As the user types, the list narrows and correspondingly the markers on display also narrow.
-If the user clicks on one of the items in the sidebar list, it is as if the user has clicked on the corresponding marker on the map: The marker bounces and the infowindow for that stadium shows. If the screen is sufficiently small that the sidebar is hidden until the user clicks the hamburger icon then the sidebar hides when a user clicks an item in the list.
+*The app shows a map (fetched from Google Maps API) of London with the location of football stadiums for teams currently in the Premier League or the Championship.
+*When each of the markers showing these stadiums is clicked, it bounces once and an infowindow is brought up which provides a snippet of information, fetched from Wikipedia, about the stadium and a link to the main Wikipedia article about the stadium.
+*As well as the markers on the map, there is also a list of the stadiums in a sidebar. The sidebar is always on show in large windows, but for small windows is hidden until the hamburger icon in the header is clicked.
+*The sidebar contains a list of all the stadiums which the user can search over by typing into the search field at the top of the sidebar. As the user types, the list narrows and correspondingly the markers on display also narrow.
+*If the user clicks on one of the items in the sidebar list, it is as if the user has clicked on the corresponding marker on the map: The marker bounces and the infowindow for that stadium shows. If the screen is sufficiently small that the sidebar is hidden until the user clicks the hamburger icon then the sidebar hides when a user clicks an item in the list.
 
 ## ServiceWorker
 The app has an automatic service worker, thanks to Create React App.
