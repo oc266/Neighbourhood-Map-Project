@@ -8,17 +8,22 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
  * https://github.com/oc266/Neighbourhood-Map-Project
 2. Install all project dependencies with `npm install`
 3. Start the development server with `npm start`
+4. Open http://localhost:3000 (it should automatically happen)
 
 ## What the app does
-* The app shows a map (fetched from Google Maps API) of London with the location of football stadiums for teams currently in the Premier League or the Championship.
-* When each of the markers showing these stadiums is clicked, it bounces once and an infowindow is brought up which provides a snippet of information, fetched from Wikipedia, about the stadium and a link to the main Wikipedia article about the stadium.
+* The app shows a map (fetched from Google Maps API and rendered using [google-maps-react](https://www.npmjs.com/package/google-maps-react)) of London with the location of football stadiums for teams currently in the Premier League or the Championship.
+* When each of the markers showing these stadiums is clicked, it bounces once and an infowindow is brought up which provides a snippet of information, fetched from [Wikipedia's API](https://www.mediawiki.org/wiki/API:Main_page), about the stadium and a link to the main Wikipedia article about the stadium.
 * As well as the markers on the map, there is also a list of the stadiums in a sidebar. The sidebar is always on show in large windows, but for small windows is hidden until the hamburger icon in the header is clicked.
 * The sidebar contains a list of all the stadiums which the user can search over by typing into the search field at the top of the sidebar. As the user types, the list narrows and correspondingly the markers on display also narrow.
 * If the user clicks on one of the items in the sidebar list, it is as if the user has clicked on the corresponding marker on the map: The marker bounces and the infowindow for that stadium shows. If the screen is sufficiently small that the sidebar is hidden until the user clicks the hamburger icon then the sidebar hides when a user clicks an item in the list.
 
 ## ServiceWorker
 The app has an automatic service worker, thanks to Create React App.
-The service worker works in production mode. To test it, simply run `npm install -g serve` and then `serve -s build` and open http://localhost:5000.
+The service worker works in production mode. To test it, simply run:
+*  `npm run build`
+* `npm install -g serve`
+* `serve -s build`
+Then, open http://localhost:5000.
 
 ## Contributing
 This repository is part of a project for Udacity's Front End Nanodegree Scholarship. Therefore, I will most likely will not accept pull requests.
