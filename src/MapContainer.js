@@ -8,7 +8,7 @@ class MapContainer extends Component {
     const { google, locations, onMarkerMounted, onMarkerClick, wikiData, selectedLocation, activeMarker, displayingInfoWindow } = this.props
     return (
       <div className='map' role='application' ref='map'>
-        <Map role='application' ref='map'
+        <Map role='application' ref='map' aria-label='Map of London, showing football stadiums of Premier League and Championship clubs'
           google = {google}
           zoom={10.5}
           initialCenter={{

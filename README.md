@@ -8,7 +8,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
  * https://github.com/oc266/Neighbourhood-Map-Project
 2. Install all project dependencies with `npm install`
 3. Start the development server with `npm start`
-4. Open http://localhost:3000 (it should automatically happen)
+4. Open `http://localhost:3000` (it should automatically happen)
 
 ## What the app does
 * The app shows a map (fetched from Google Maps API and rendered using [google-maps-react](https://www.npmjs.com/package/google-maps-react)) of London with the location of football stadiums for teams currently in the Premier League or the Championship.
@@ -23,7 +23,7 @@ The service worker works in production mode. To test it, simply run:
 *  `npm run build`
 * `npm install -g serve`
 * `serve -s build`
-Then, open http://localhost:5000.
+Then, open `http://localhost:5000`.
 
 ## Contributing
 This repository is part of a project for Udacity's Front End Nanodegree Scholarship. Therefore, I will most likely will not accept pull requests.

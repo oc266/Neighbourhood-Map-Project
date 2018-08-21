@@ -21,7 +21,7 @@
 }
 
 .places-hamburger {
-  display: none;
+  visibility: hidden;
 }
 
 .app-title {
@@ -97,6 +97,7 @@
 
 @media screen and (max-width: 625px) {
   .places-hamburger {
+    visibility: visible;
     display: block;
     position: absolute;
     height: 100%;
@@ -115,14 +116,16 @@
     width: 300px;
     height: 100vh;
     left: 0;
-    -webkit-transform: translate(-300px, 0);
+    visibility: hidden;
+    /* -webkit-transform: translate(-300px, 0);
     transform: translate(-300px, 0);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease; */
   }
 
   .places-search-list.open {
-    -webkit-transform: translate(0, 0);
-    transform: translate(0, 0);
+    visibility: visible;
+    /* -webkit-transform: translate(0, 0);
+    transform: translate(0, 0); */
   }
 
   .places-search-bar {

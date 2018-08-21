@@ -136,7 +136,7 @@ class App extends Component {
     return (
       <div className="app">
         <header className="app-header">
-          <a className="places-hamburger">
+          <a className="places-hamburger" role="button" aria-label="Hamburger item to toggle list of stadiums" tabindex="0">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
             </svg>
