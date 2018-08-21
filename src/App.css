@@ -6,6 +6,12 @@
   justify-content: center;
 }
 
+/*
+ *
+ * Header
+ *
+ */
+
 .app-header {
   background-color: rgb(75, 75, 75);
   height: 50px;
@@ -21,6 +27,12 @@
 .app-title {
   font-size: 1.5em;
 }
+
+/*
+ *
+ * Sidebar
+ *
+ */
 
 .places-search-list {
   width: 25%;
@@ -44,6 +56,12 @@
   padding-bottom: 4%;
 }
 
+/*
+ *
+ * Map
+ *
+ */
+
 .map-container {
   position: relative;
   width: 75%;
@@ -58,6 +76,12 @@
 .info_window {
   width: 200px;
 }
+
+/*
+ *
+ * Responsive
+ *
+ */
 
 @media screen and (max-width: 780px) {
   .place-list-item {
@@ -85,10 +109,6 @@
     fill: #E0E0E0;
   }
 
-  .map-container {
-    width: 100%;
-  }
-
   .places-search-list {
     z-index: 10;
     position: absolute;
@@ -111,5 +131,9 @@
 
   .place-list-item {
     font-size: 0.8em;
+  }
+
+  .map-container {
+    width: 100%;
   }
 }

@@ -3,6 +3,7 @@ import { Map, Marker, InfoWindow } from 'google-maps-react';
 
 class MapContainer extends Component {
 
+  // Render the map container
   render() {
     const { google, locations, onMarkerMounted, onMarkerClick, wikiData, selectedLocation, activeMarker, displayingInfoWindow } = this.props
     return (
@@ -33,7 +34,7 @@ class MapContainer extends Component {
               {wikiData.map(data => data.name === selectedLocation.title &&
                 <div key={data.text}>
                   <p>
-                    {data.text}
+                    {data.text}...
                   </p>
                   <a
                     href={data.url}

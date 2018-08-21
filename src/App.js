@@ -11,7 +11,11 @@ class App extends Component {
       {name: 'Craven Cottage', location: {lat: 51.4749, lng: -0.2218}},
       {name: 'Emirates Stadium', location: {lat: 51.5549, lng: -0.1084}},
       {name: 'Stamford Bridge', location: {lat: 51.4817, lng: -0.1910}},
-      {name: 'Loftus Road', location: {lat: 51.5093, lng: -0.2321}}
+      {name: 'Loftus Road', location: {lat: 51.5093, lng: -0.2321}},
+      {name: 'Wembley Stadium', location: {lat: 51.5560, lng: -0.2795}},
+      {name: 'London Stadium', location: {lat: 51.5387, lng: -0.0166}},
+      {name: 'Selhurst Park', location: {lat: 51.3992, lng: -0.0864}},
+      {name: 'The Den', location: {lat: 51.4859, lng: -0.0509}}
     ],
     query: '',
     activeMarker: {},
@@ -20,8 +24,11 @@ class App extends Component {
     displayingInfoWindow: false
   }
 
+  // A list of markers to fill as markers are added to the map or are changed.
   markers = []
 
+  // A function to call when the page loads to set up an event listener on the
+  // hamburger icon and to fetch the data from Wikipedia for the infowindows.
   componentDidMount() {
     document.querySelector('.places-hamburger').addEventListener('click', function (e) {
       document.querySelector('.places-search-list').classList.toggle('open');
@@ -30,12 +37,18 @@ class App extends Component {
     this.getWikiData()
   }
 
+  // Function to push a marker to the list of markers, to be called when markers
+  // are mounted on the map.
   onMarkerMounted = (marker) => {
     if (marker != null) {
       this.markers.push(marker)
     }
   }
 
+  // A function to animate a marker and to set the state for the active marker,
+  // for the selected location and for whether an info window should display.
+  // To be called whenever a marker is clicked or whenever an item in the list
+  // in the sidebar is clicked.
   onMarkerClick = (props, marker, e) => {
     marker.setAnimation(this.props.google.maps.Animation.BOUNCE);
     this.setState({
@@ -46,22 +59,24 @@ class App extends Component {
     marker.setAnimation(null)
   }
 
+  // A function to set the state query, to be called whenever the app user
+  // changes the input to the search field in the sidebar.
   updateQuery = (query) => {
     this.setState({ query })
   }
 
-  // Function to fetch data from wikipedia about all the locations. To be called
+  // Function to fetch data from Wikipedia about all the locations. To be called
   // on the page mounting so that all the data pulled from wikipedia can be
   // stored in a state array, with entries for each location.
   getWikiData = () => {
     let wikiData = []
-    // Fetch a search result for each location in the locations array
+    // Fetch a search result for each location in the locations array.
     this.state.locations.map((location) => {
       return fetch(`https://en.wikipedia.org/w/api.php?&action=query&list=search&prop=extracts&titles&format=json&origin=*&srlimit=1&srsearch=${location.name}`)
       // For each location's search result, we want to get the snippet and also
       // create the URL for wikipedia's page on the location so that we can
       // provide users with a snippet of information and also provide a link
-      // to the full wikipedia page
+      // to the full Wikipedia page in the infowindows.
       .then(response => response.json())
       .then(data => {
         let locationData = {
@@ -87,19 +102,29 @@ class App extends Component {
     })
   }
 
+  // A function to simulate a click of the marker when the user clicks the
+  // corresponding link in the sidebar. Simulating a click will trigger the
+  // calling of the onMarkerClick function to bring up the infowindow and
+  // animate the marker.
   selectLocation = (location) => {
     let matchedMarker = this.markers.filter((marker) => marker.props.title === location.textContent)[0]
     matchedMarker.props.google.maps.event.trigger(matchedMarker.marker, 'click')
-
+    // If the screen width is below 625 pixels then hide the sidebar on clicking
+    // the link in it, so that the user can see the map.
     if (window.screen.width < 625) {
        document.querySelector('.places-search-list').classList.toggle('open')
      }
   }
 
+  // Render the page
   render() {
     const { google } = this.props
     const { query, locations, activeMarker, selectedLocation, wikiData, displayingInfoWindow } = this.state
 
+    // Fill an array called filteredLocations either with locations matching the
+    // search query, if a query has been made, or with all locations. This will
+    // be passed to the MapContainer component so that only these locations will
+    // be shown on the map and in the sidebar list.
     let filteredLocations
     if (this.state.query) {
       const match = new RegExp(escapeRegExp(this.state.query), 'i')
