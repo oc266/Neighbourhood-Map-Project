@@ -40,9 +40,7 @@ class App extends Component {
   // Function to push a marker to the list of markers, to be called when markers
   // are mounted on the map.
   onMarkerMounted = (marker) => {
-    if (marker != null) {
-      this.markers.push(marker)
-    }
+    marker != null && this.markers.push(marker)
   }
 
   // A function to animate a marker and to set the state for the active marker,
@@ -93,8 +91,7 @@ class App extends Component {
       .catch(() => {
         let locationData = {
           name: location.name,
-          text: 'Could not fetch data from Wikipedia - please try again later',
-          getMoreInfo: 'No link could be found for further information'
+          text: 'Could not fetch data from Wikipedia - please try again later'
         }
         wikiData.push(locationData)
         this.setState({ wikiData })
@@ -106,7 +103,7 @@ class App extends Component {
   // corresponding link in the sidebar. Simulating a click will trigger the
   // calling of the onMarkerClick function to bring up the infowindow and
   // animate the marker.
-  selectLocation = (location) => {
+  simulateLocationClick = (location) => {
     let matchedMarker = this.markers.filter((marker) => marker.props.title === location.textContent)[0]
     matchedMarker.props.google.maps.event.trigger(matchedMarker.marker, 'click')
     // If the screen width is below 625 pixels then hide the sidebar on clicking
@@ -125,7 +122,7 @@ class App extends Component {
     // search query, if a query has been made, or with all locations. This will
     // be passed to the MapContainer component so that only these locations will
     // be shown on the map and in the sidebar list.
-    let filteredLocations
+    let filteredLocations = []
     if (this.state.query) {
       const match = new RegExp(escapeRegExp(this.state.query), 'i')
       filteredLocations = locations.filter((location) => match.test(location.name))
@@ -136,7 +133,12 @@ class App extends Component {
     return (
       <div className="app">
         <header className="app-header">
-          <a className="places-hamburger" role="button" aria-label="Hamburger item to toggle list of stadiums" tabindex="0">
+          <a
+            className="places-hamburger"
+            role="button"
+            aria-label="Hamburger item to toggle list of stadiums"
+            tabIndex="0"
+          >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
             </svg>
@@ -158,7 +160,7 @@ class App extends Component {
               <li key={i} className="list-item">
                 <button
                   className="place-list-item"
-                  onClick={(event) => this.selectLocation(event.target)}
+                  onClick={(event) => this.simulateLocationClick(event.target)}
                   >
                   {location.name}
                 </button>

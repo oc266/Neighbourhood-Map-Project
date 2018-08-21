@@ -36,12 +36,14 @@ class MapContainer extends Component {
                   <p>
                     {data.text}...
                   </p>
-                  <a
-                    href={data.url}
-                    className='get_more_info'
-                  >
-                    {data.getMoreInfo}
-                  </a>
+                  {data.getMoreInfo &&
+                    <a
+                      href={data.url}
+                      className='get_more_info'
+                    >
+                      {data.getMoreInfo}
+                    </a>
+                  }
                 </div>
               )}
             </div>
